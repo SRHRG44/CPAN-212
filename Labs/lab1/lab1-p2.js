@@ -3,11 +3,11 @@ const fs = require("fs");
 
 const app = http.createServer((req, res) => {
     if (req.url === "/") {
-        let webpage = fs.readdirSync("homepage.html")
+        let webpage = fs.readFileSync("homepage.html")
         res.end(webpage)
 
     } else if (req.url === "/homepage") {
-        let webpage = fs.readdirSync("homepage.html")
+        let webpage = fs.readFileSync("homepage.html")
         res.end(webpage)
 
     } else if (req.url === "/login") {
