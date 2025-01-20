@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            /* Add some margin around the content */
+            line-height: 1.6;
+            /* Improve line spacing for readability */
+            background-color: #f8f8f8;
+            /* Very light gray background */
+            color: #333;
+            /* Dark gray text for better contrast */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            /* Center the content */
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Slightly stronger shadow */
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            /* Center the headings */
+            margin-bottom: 20px;
+        }
+
+        .bio-section {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            /* Light gray border for the bio section */
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            /* Off-white background for the bio */
+        }
+
+        img {
+            max-width: 100%;
+            /* Make images responsive */
+            height: auto;
+            display: block;
+            margin: 10px auto;
+            /* Center the images */
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #777;
+        }
+
+        header {
+            background-color: #007bff;
+            /* Blue header */
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+            display: flex;
+            /* Use flexbox for horizontal navigation */
+            justify-content: center;
+            /* Center the navigation items */
+        }
+
+        nav li {
+            margin: 0 15px;
+            /* Add spacing between navigation items */
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            /* Smooth hover effect */
+        }
+
+        nav a:hover {
+            background-color: #0056b3;
+            /* Darker blue on hover */
+        }
+
+        main {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .registration-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            margin: 20px auto;
+        }
+
+        .registration-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>My Bookstore</h1>
+        <nav>
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/books">Books</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/register">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="registration-container">
+            <h2>Register</h2>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 My Bookstore</p>
+    </footer>
+</body>
+
+</html>

@@ -17,10 +17,12 @@ const app = http.createServer((req, res) => {
         filePath = path.join(__dirname, "html_pages", "books.html");
     } else if (req.url === "/profile") {
     filePath = path.join(__dirname, "html_pages", "profile_page.html");
+    } else if (req.url === "/register" || req.url === "/registration") {
+        filePath = path.join(__dirname, "html_pages", "registration.html");
     } else {
         res.writeHead(404, { "Content-Type": "text/plain" });
         res.end("Error 404 - Page not found");
-        return; // Important: Exit the function
+        return;
     }
 
     fs.readFile(filePath, (err, data) => {
@@ -34,38 +36,6 @@ const app = http.createServer((req, res) => {
         }
     });
 });
-// const http = require("http")
-// const fs = require("fs");
-
-// const app = http.createServer((req, res) => {
-//     if (req.url === "/") {
-//         let webpage = fs.readFileSync("Labs\lab1\html_pages\homepage.html")
-//         res.end(webpage)
-
-//     } else if (req.url === "/homepage") {
-//         let webpage = fs.readFileSync("Labs\lab1\html_pages\homepage.html")
-//         res.end(webpage)
-
-//     } else if (req.url === "/login") {
-//         let webpage = fs.readFileSync("Labs\lab1\html_pages\login.html")
-//         res.end(webpage)
-
-//     } else if (req.url === "/about_us") {
-//         let webpage = fs.readFileSync("Labs\lab1\html_pages\about_us.html")
-//         res.end(webpage)
-
-//     } else if (req.url === "/contact_us") {
-//         let webpage = fs.readFileSync("Labs\lab1\html_pages\contact_us.html")
-//         res.end(webpage)
-
-//     } else if (req.url === "/items" || req.url === "/books") {
-//         let webpage = fs.readdirSync('Labs\lab1\html_pages\books.html')
-//         res.end(webpage)
-
-//     } else {
-//         res.end("Error 404 - Page not found")
-//     }
-// })
 
 let PORT = 8000;
 app.listen(PORT, () => {
