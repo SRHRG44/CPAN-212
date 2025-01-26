@@ -10,7 +10,7 @@ router.get("/name", (req, res) => {
 });
 
 router.get("/greeting", (req, res) => {
-    res.send("Hols, I am Sergio Romero and My Humber Id is n00466753");
+    res.send("Hola, I am Sergio Romero and My Humber Id is n00466753");
 });
 
 router.get("/add/:x/:y", (req, res) => {
