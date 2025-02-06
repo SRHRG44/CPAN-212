@@ -1,0 +1,5 @@
+npm init -y
+npm i express nodemon
+in package.json change type to module
+npm create vite@latest .
+npm i cors
