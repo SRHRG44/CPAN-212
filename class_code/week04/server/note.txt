@@ -1,0 +1,4 @@
+npm init -y
+npm i express nodemon
+
+in package.json -> add type module
