@@ -3,3 +3,5 @@ npm i express nodemon
 in package.json change type to module
 npm create vite@latest .
 npm i cors
+npm i multer
+npm install --save multer
