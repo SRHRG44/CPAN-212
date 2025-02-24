@@ -1,0 +1,15 @@
+  body {
+    font-family: sans-serif;
+    margin: 20px;
+  }
+
+  .overview {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .education,
+  .experience {
+    margin-bottom: 20px;
+  }
