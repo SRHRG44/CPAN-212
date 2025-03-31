@@ -1,39 +1,78 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import BackButton from '../../components/BackButton';
+import Link from 'next/link'; // Import Link
 
-function RecipeDetail() {
-  const { id } = useParams();
+function RecipeDetails({ params }) {
   const [recipe, setRecipe] = useState(null);
+  const [error, setError] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
-    fetch(`http://localhost:8001/recipe/${id}`)
-      .then(response => response.json())
-      .then(data => setRecipe(data))
-      .catch(error => console.error(error));
-  }, [id]);
+    const fetchRecipe = async () => {
+      try {
+        const response = await fetch(`http://localhost:8001/recipe/${params.id}`);
+        if (!response.ok) {
+          if (response.status === 404) {
+            setError('Recipe not found');
+          } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+        }
+        const data = await response.json();
+        setRecipe(data);
+      } catch (error) {
+        console.error('Could not fetch recipe:', error);
+        setError('Could not fetch recipe');
+      }
+    };
 
-  function handleDelete(id) {
-    fetch(`http://localhost:8001/recipe/${id}`, { method: 'DELETE' })
-      .then(() => (window.location.href = "/"))
-      .catch(error => console.error(error));
+    fetchRecipe();
+  }, [params.id]);
+
+  if (error) {
+    return (
+      <div>
+        <h1>Recipe Details</h1>
+        <BackButton />
+        <p>{error}</p>
+      </div>
+    );
   }
 
-  if (!recipe) return <p>Loading...</p>;
+  if (!recipe) {
+    return (
+      <div>
+        <h1>Recipe Details</h1>
+        <BackButton />
+        <div>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div>
-      <h1>{recipe.name}</h1>
-      <p>{recipe.description}</p>
+      <h1>Recipe Details</h1>
+      <BackButton />
+      <h2>{recipe.name}</h2>
+      <p>Description: {recipe.description}</p>
       <p>Difficulty: {recipe.difficulty}</p>
-      <h3>Ingredients</h3>
-      <ul>{recipe.ingredients.map((item, index) => <li key={index}>{item}</li>)}</ul>
-      <h3>Steps</h3>
-      <ol>{recipe.steps.map((step, index) => <li key={index}>{step}</li>)}</ol>
-      <Link to={`/recipes/${id}/edit`}>Edit</Link>
-      <button onClick={() => handleDelete(id)}>Delete</button>
+      <h3>Ingredients:</h3>
+      <ul>
+        {recipe.ingredients.map((ingredient, index) => (
+          <li key={index}>{ingredient}</li>
+        ))}
+      </ul>
+      <h3>Steps:</h3>
+      <ol>
+        {recipe.steps.map((step, index) => (
+          <li key={index}>{step}</li>
+        ))}
+      </ol>
+      <Link href={`/recipes/${recipe._id}/edit`}>Edit Recipe</Link> {/* Add Link to edit page */}
     </div>
   );
 }
 
-export default RecipeDetail;
+export default RecipeDetails;

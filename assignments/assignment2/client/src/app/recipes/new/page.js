@@ -1,9 +1,10 @@
 "use client";
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import BackButton from '../../components/BackButton';
 
 function AddRecipe() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [recipe, setRecipe] = useState({
     name: '',
     description: '',
@@ -51,86 +52,91 @@ function AddRecipe() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(recipe),
     })
-      .then(() => navigate('/'))
+      .then(() => router.push('/recipes'))
       .catch((error) => console.error(error));
   }
 
   return (
-    <div>
-      <h1>Add New Recipe</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={recipe.name}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Description:
-          <textarea
-            name="description"
-            value={recipe.description}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <label>
-          Difficulty:
-          <select
-            name="difficulty"
-            value={recipe.difficulty}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Difficulty</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-          </select>
-        </label>
-
-        <h3>Ingredients</h3>
-        {recipe.ingredients.map((ingredient, index) => (
-          <div key={index}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', margin: '20px' }}>
+      <div style={{ width: '500px' }}>
+        <h1>Add New Recipe</h1>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+          <label style={{ marginBottom: '10px' }}>
+            Name:
             <input
               type="text"
-              value={ingredient}
-              onChange={(e) => handleArrayChange(e, index, 'ingredients')}
+              name="name"
+              value={recipe.name}
+              onChange={handleChange}
               required
+              style={{ width: '100%', boxSizing: 'border-box' }}
             />
-            <button type="button" onClick={() => removeArrayItem(index, 'ingredients')}>
-              Remove
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={() => addArrayItem('ingredients')}>
-          Add Ingredient
-        </button>
-
-        <h3>Steps</h3>
-        {recipe.steps.map((step, index) => (
-          <div key={index}>
-            <input
-              type="text"
-              value={step}
-              onChange={(e) => handleArrayChange(e, index, 'steps')}
+          </label>
+          <label style={{ marginBottom: '10px' }}>
+            Description:
+            <textarea
+              name="description"
+              value={recipe.description}
+              onChange={handleChange}
               required
+              style={{ width: '100%', boxSizing: 'border-box' }}
             />
-            <button type="button" onClick={() => removeArrayItem(index, 'steps')}>
-              Remove
-            </button>
-          </div>
-        ))}
-        <button type="button" onClick={() => addArrayItem('steps')}>
-          Add Step
-        </button>
+          </label>
+          <label style={{ marginBottom: '10px' }}>
+            Difficulty:
+            <select
+              name="difficulty"
+              value={recipe.difficulty}
+              onChange={handleChange}
+              required
+              style={{ width: '100%', boxSizing: 'border-box' }}
+            >
+              <option value="">Select Difficulty</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+          </label>
 
-        <button type="submit">Add Recipe</button>
-      </form>
+          <h3>Ingredients</h3>
+          {recipe.ingredients.map((ingredient, index) => (
+            <div key={index}>
+              <input
+                type="text"
+                value={ingredient}
+                onChange={(e) => handleArrayChange(e, index, 'ingredients')}
+                required
+              />
+              <button type="button" onClick={() => removeArrayItem(index, 'ingredients')}>
+                Remove
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={() => addArrayItem('ingredients')}>
+            Add Ingredient
+          </button>
+
+          <h3>Steps</h3>
+          {recipe.steps.map((step, index) => (
+            <div key={index}>
+              <input
+                type="text"
+                value={step}
+                onChange={(e) => handleArrayChange(e, index, 'steps')}
+                required
+              />
+              <button type="button" onClick={() => removeArrayItem(index, 'steps')}>
+                Remove
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={() => addArrayItem('steps')}>
+            Add Step
+          </button>
+
+          <button type="submit">Add Recipe</button>
+        </form>
+      </div>
     </div>
   );
 }
