@@ -8,7 +8,7 @@ const recipeRouter = require('./routes/recipe_router');
 const app = express();
 
 // Enable CORS for all routes (simplest for development)
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json()); // Parse JSON request bodies
 
 // MongoDB Connection

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Link from 'next/link';
 
 function RecipeList() {
   const [recipes, setRecipes] = useState([]);
@@ -24,15 +24,15 @@ function RecipeList() {
   return (
     <div>
       <h1>All Recipes</h1>
-      <Link to="/recipes/new">Add New Recipe</Link>
+      <Link href="/recipes/new">Add New Recipe</Link>
       <div className="recipe-list">
         {recipes.map((recipe) => (
           <div key={recipe.id} className="recipe-card">
             <h2>{recipe.name}</h2>
             <p>{recipe.description}</p>
             <div className="recipe-actions">
-              <Link to={`/recipes/${recipe._id}`}>View</Link>
-              <Link to={`/recipes/${recipe._id}/edit`}>Edit</Link>
+              <Link href={`/recipes/${recipe._id}`}>View</Link>
+              <Link href={`/recipes/${recipe._id}/edit`}>Edit</Link>
               <button onClick={() => handleDelete(recipe._id)}>Delete</button>
             </div>
           </div>

@@ -1,4 +1,4 @@
-const Recipe = require('./model/recipe.js'); // Adjust the path to your recipe model
+const Recipe = require('../models/recipe.js'); // Adjust the path to your recipe model
 
 // GET all recipes
 exports.getAllRecipes = async (req, res) => {
