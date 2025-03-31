@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const recipeController = require('./controllers/recipe_controller'); // Import the controller
-
+const recipeController = require('../controllers/recipe_controller');
 // GET all recipes
 router.get('/recipe', recipeController.getAllRecipes);
 

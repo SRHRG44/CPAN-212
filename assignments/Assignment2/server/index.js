@@ -3,18 +3,12 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config(); // Load environment variables
-const recipeRouter = require('./routes/recipe_router'); // Import your recipe router
+const recipeRouter = require('./routes/recipe_router');
 
 const app = express();
 
 // Enable CORS for all routes (simplest for development)
 app.use(cors());
-
-// Or, enable CORS for specific origins (more secure - for production)
-app.use(cors({
-  origin: 'http://localhost:3000', // Allow requests from your Next.js app
-}));
-
 app.use(express.json()); // Parse JSON request bodies
 
 // MongoDB Connection
