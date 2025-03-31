@@ -14,12 +14,12 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <Link href="/pages" className={styles.card}>
+          <Link href="/recipes" className={styles.card}>
             <h2>View Recipes &rarr;</h2>
             <p>Browse and manage your delicious recipes.</p>
           </Link>
 
-          <Link href="/pages/new" className={styles.card}>
+          <Link href="/recipes/new" className={styles.card}>
             <h2>Add Recipe &rarr;</h2>
             <p>Add a new recipe to your collection.</p>
           </Link>
