@@ -1,62 +1,79 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+"use client";
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
-function AddRecipe() {
+function RecipeEdit() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [recipe, setRecipe] = useState({
     name: '',
     description: '',
     difficulty: '',
-    ingredients: [''],
-    steps: [''],
+    ingredients: [],
+    steps: []
   });
+
+  useEffect(() => {
+    fetch(`http://localhost:8001/recipe/${id}`)
+      .then(response => response.json())
+      .then(data => setRecipe(data))
+      .catch(error => console.error(error));
+  }, [id]);
 
   function handleChange(e) {
     const { name, value } = e.target;
-    setRecipe((prevRecipe) => ({
+    setRecipe(prevRecipe => ({
       ...prevRecipe,
-      [name]: value,
+      [name]: value
     }));
   }
 
-  function handleArrayChange(e, index, key) {
-    const { value } = e.target;
-    setRecipe((prevRecipe) => {
-      const updatedArray = [...prevRecipe[key]];
-      updatedArray[index] = value;
-      return { ...prevRecipe, [key]: updatedArray };
-    });
-  }
-
-  function addArrayItem(key) {
-    setRecipe((prevRecipe) => ({
+  function handleIngredientChange(index, value) {
+    const updatedIngredients = [...recipe.ingredients];
+    updatedIngredients[index] = value;
+    setRecipe(prevRecipe => ({
       ...prevRecipe,
-      [key]: [...prevRecipe[key], ''],
+      ingredients: updatedIngredients
     }));
   }
 
-  function removeArrayItem(index, key) {
-    setRecipe((prevRecipe) => {
-      const updatedArray = [...prevRecipe[key]];
-      updatedArray.splice(index, 1);
-      return { ...prevRecipe, [key]: updatedArray };
-    });
+  function handleStepChange(index, value) {
+    const updatedSteps = [...recipe.steps];
+    updatedSteps[index] = value;
+    setRecipe(prevRecipe => ({
+      ...prevRecipe,
+      steps: updatedSteps
+    }));
+  }
+
+  function addIngredient() {
+    setRecipe(prevRecipe => ({
+      ...prevRecipe,
+      ingredients: [...prevRecipe.ingredients, '']
+    }));
+  }
+
+  function addStep() {
+    setRecipe(prevRecipe => ({
+      ...prevRecipe,
+      steps: [...prevRecipe.steps, '']
+    }));
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetch('http://localhost:8001/recipe', {
-      method: 'POST',
+    fetch(`http://localhost:8001/recipe/${id}`, {
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(recipe),
     })
-      .then(() => navigate('/'))
-      .catch((error) => console.error(error));
+      .then(() => navigate(`/recipes/${id}`))
+      .catch(error => console.error(error));
   }
 
   return (
     <div>
-      <h1>Add New Recipe</h1>
+      <h1>Edit Recipe</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Name:
@@ -68,6 +85,7 @@ function AddRecipe() {
             required
           />
         </label>
+        <br />
         <label>
           Description:
           <textarea
@@ -77,6 +95,7 @@ function AddRecipe() {
             required
           />
         </label>
+        <br />
         <label>
           Difficulty:
           <select
@@ -91,47 +110,37 @@ function AddRecipe() {
             <option value="Hard">Hard</option>
           </select>
         </label>
-
+        <br />
         <h3>Ingredients</h3>
         {recipe.ingredients.map((ingredient, index) => (
           <div key={index}>
             <input
               type="text"
               value={ingredient}
-              onChange={(e) => handleArrayChange(e, index, 'ingredients')}
+              onChange={(e) => handleIngredientChange(index, e.target.value)}
               required
             />
-            <button type="button" onClick={() => removeArrayItem(index, 'ingredients')}>
-              Remove
-            </button>
           </div>
         ))}
-        <button type="button" onClick={() => addArrayItem('ingredients')}>
-          Add Ingredient
-        </button>
-
+        <button type="button" onClick={addIngredient}>Add Ingredient</button>
+        <br />
         <h3>Steps</h3>
         {recipe.steps.map((step, index) => (
           <div key={index}>
             <input
               type="text"
               value={step}
-              onChange={(e) => handleArrayChange(e, index, 'steps')}
+              onChange={(e) => handleStepChange(index, e.target.value)}
               required
             />
-            <button type="button" onClick={() => removeArrayItem(index, 'steps')}>
-              Remove
-            </button>
           </div>
         ))}
-        <button type="button" onClick={() => addArrayItem('steps')}>
-          Add Step
-        </button>
-
-        <button type="submit">Add Recipe</button>
+        <button type="button" onClick={addStep}>Add Step</button>
+        <br />
+        <button type="submit">Update Recipe</button>
       </form>
     </div>
   );
 }
 
-export default AddRecipe;
+export default RecipeEdit;
