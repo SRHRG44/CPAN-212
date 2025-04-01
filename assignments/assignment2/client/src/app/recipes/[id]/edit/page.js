@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import BackButton from '../../../components/BackButton';
+import Link from 'next/link'; // Corrected import
 
-function RecipeEdit() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+function RecipeEdit({ params }) { // Use params prop
+  const router = useRouter(); // Use useRouter
   const [recipe, setRecipe] = useState({
     name: '',
     description: '',
@@ -15,11 +15,11 @@ function RecipeEdit() {
   });
 
   useEffect(() => {
-    fetch(`http://localhost:8001/recipe/${id}`)
+    fetch(`http://localhost:8001/recipe/${params.id}`) // Use params.id
       .then(response => response.json())
       .then(data => setRecipe(data))
       .catch(error => console.error(error));
-  }, [id]);
+  }, [params.id]); // Use params.id
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -63,19 +63,20 @@ function RecipeEdit() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    fetch(`http://localhost:8001/recipe/${id}`, {
+    fetch(`http://localhost:8001/recipe/${params.id}`, { // Use params.id
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(recipe),
     })
-      .then(() => navigate(`/recipes/${id}`))
+      .then(() => router.push(`/recipes/${params.id}`)) // Use router.push
       .catch(error => console.error(error));
   }
 
   return (
-    <div>
-      <h1>Edit Recipe</h1>
-      <form onSubmit={handleSubmit}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', margin: '20px' }}>
+    <div style={{ width: '500px' }}>
+    <h1>Edit Recipe</h1>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
         <label>
           Name:
           <input
@@ -140,6 +141,8 @@ function RecipeEdit() {
         <br />
         <button type="submit">Update Recipe</button>
       </form>
+      <Link href={`/recipes/${params.id}`}>View Recipe</Link> {/* Use Link */}
+    </div>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import BackButton from '../../components/BackButton';
 import Link from 'next/link'; // Import Link
 
 function RecipeDetails({ params }) {
@@ -35,7 +34,7 @@ function RecipeDetails({ params }) {
     return (
       <div>
         <h1>Recipe Details</h1>
-        <BackButton />
+
         <p>{error}</p>
       </div>
     );
@@ -45,7 +44,6 @@ function RecipeDetails({ params }) {
     return (
       <div>
         <h1>Recipe Details</h1>
-        <BackButton />
         <div>Loading...</div>
       </div>
     );
@@ -54,7 +52,6 @@ function RecipeDetails({ params }) {
   return (
     <div>
       <h1>Recipe Details</h1>
-      <BackButton />
       <h2>{recipe.name}</h2>
       <p>Description: {recipe.description}</p>
       <p>Difficulty: {recipe.difficulty}</p>
