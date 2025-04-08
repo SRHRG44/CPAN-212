@@ -28,23 +28,33 @@ export default function OrderPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
-  const [userId, setUserId] = useState(null); // Example for user authentication
+  const [userId, setUserId] = useState(null);
   const [orderStatus, setOrderStatus] = useState(null); // 'success' or 'error'
   const [orderErrorMessage, setOrderErrorMessage] = useState('');
 
   useEffect(() => {
-    // Example: Check for user ID in localStorage on component mount
-    const storedUserId = localStorage.getItem('userId');
-    if (!storedUserId) {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
       router.push('/login'); // Redirect if not logged in
-    } else {
-      setUserId(storedUserId);
+      return;
     }
 
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('/api/recipes');
+        const response = await fetch('/api/recipes', {
+          headers: {
+            'Authorization': `Bearer ${authToken}`, // Include token for potential future protection
+          },
+        });
         if (!response.ok) {
+          if (response.status === 401) {
+            // Token might be invalid or expired, redirect to login
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userId');
+            localStorage.removeItem('username');
+            router.push('/login');
+            return;
+          }
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
@@ -57,11 +67,11 @@ export default function OrderPage() {
     };
 
     fetchRecipes();
+    setUserId(localStorage.getItem('userId')); // Get userId from storage
   }, [router]);
 
   useEffect(() => {
     setTotalMeals(mealsPerDay * duration);
-    // Reset cart when meal plan changes
     setCart({});
   }, [mealsPerDay, duration]);
 
@@ -99,8 +109,14 @@ export default function OrderPage() {
   };
 
   const handlePlaceOrder = async () => {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      router.push('/login');
+      return;
+    }
+
     if (!userId) {
-      alert('Please log in to place an order.');
+      alert('User information not found. Please log in again.');
       router.push('/login');
       return;
     }
@@ -123,11 +139,12 @@ export default function OrderPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`, // Include token for authentication
         },
         body: JSON.stringify({
           userId,
           mealsPerDay,
-          durationWeeks: duration / 7, // Convert days to weeks
+          durationWeeks: duration / 7,
           selectedRecipes,
         }),
       });
@@ -136,7 +153,7 @@ export default function OrderPage() {
         const data = await response.json();
         console.log('Order placed successfully:', data);
         setOrderStatus('success');
-        setCart({}); // Clear the cart
+        setCart({});
         // Optionally redirect to an order confirmation page
       } else {
         const errorData = await response.json();
