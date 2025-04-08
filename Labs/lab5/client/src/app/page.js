@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import styles from './page.module.css'; // Import the CSS module
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className={`min-h-screen bg-gray-100 flex flex-col ${styles.page}`}> {/* Apply the .page style */}
       <Navbar />
       <div className="container mx-auto text-center py-16 flex-grow">
         <h1 className="text-4xl font-bold text-green-600 mb-8">Welcome to Your Food Prep Paradise!</h1>
@@ -12,19 +13,19 @@ export default function HomePage() {
           Get delicious and healthy meals prepared just the way you like them.
           Choose your favorite recipes and customize your weekly or monthly meal plan.
         </p>
-        <div className="flex justify-center space-x-4">
-          <Link href="/order" className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full">
+        <div className={styles.ctas}> {/* Apply the .ctas style for the button container */}
+          <Link href="/order" className="primary"> {/* Use the .primary style from CSS module */}
             Start Your Order
           </Link>
-          <Link href="/recipes" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full">
+          <Link href="/recipes" className="secondary"> {/* Use the .secondary style from CSS module */}
             View Our Recipes
           </Link>
         </div>
-        <div className="mt-8 text-lg text-gray-700">
-          <p>Ready to get started?</p>
-          <Link href="/register" className="text-green-600 hover:underline mr-4">Register</Link>
+        <div className={styles.authLinks}> {/* Apply the .authLinks style for the register/login links */}
+          <p className="text-lg text-gray-700">Ready to get started?</p>
+          <Link href="/register" className="">Register</Link>
           <span>or</span>
-          <Link href="/login" className="text-blue-600 hover:underline ml-4">Login</Link>
+          <Link href="/login" className="">Login</Link>
         </div>
       </div>
       <Footer />
