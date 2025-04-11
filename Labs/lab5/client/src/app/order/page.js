@@ -24,26 +24,27 @@ export default function OrderPage() {
   const [duration, setDuration] = useState(7);
   const [totalMeals, setTotalMeals] = useState(7);
   const [recipes, setRecipes] = useState([]);
-  const [cart, setCart] = useState({}); // { recipeId: quantity }
+  const [cart, setCart] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
   const [userId, setUserId] = useState(null);
-  const [orderStatus, setOrderStatus] = useState(null); // 'success' or 'error'
+  const [orderStatus, setOrderStatus] = useState(null);
   const [orderErrorMessage, setOrderErrorMessage] = useState('');
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
     if (!authToken) {
-      router.push('/login'); // Redirect if not logged in
+      router.push('/login');
       return;
     }
 
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('/api/recipes', {
+        const response = await fetch('http://localhost:8001/api/recipes', {
+          method: 'GET', // Explicitly add the method for clarity
           headers: {
-            'Authorization': `Bearer ${authToken}`, // Include token for potential future protection
+            'Authorization': `Bearer ${authToken}`,
           },
         });
         if (!response.ok) {
@@ -67,7 +68,7 @@ export default function OrderPage() {
     };
 
     fetchRecipes();
-    setUserId(localStorage.getItem('userId')); // Get userId from storage
+    setUserId(localStorage.getItem('userId'));
   }, [router]);
 
   useEffect(() => {
@@ -135,11 +136,11 @@ export default function OrderPage() {
         quantity: cart[recipeId],
       }));
 
-      const response = await fetch('/api/orders', {
+      const response = await fetch('http://localhost:8001/api/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`, // Include token for authentication
+          'Authorization': `Bearer ${authToken}`,
         },
         body: JSON.stringify({
           userId,
@@ -154,7 +155,6 @@ export default function OrderPage() {
         console.log('Order placed successfully:', data);
         setOrderStatus('success');
         setCart({});
-        // Optionally redirect to an order confirmation page
       } else {
         const errorData = await response.json();
         setOrderStatus('error');

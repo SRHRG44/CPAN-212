@@ -2,6 +2,8 @@ const User = require('../models/user');
 const { hashPassword, comparePassword, generateToken } = require('../middlewares/auth');
 
 exports.registerUser = async (req, res) => {
+  console.log('registerUser function called!');
+  console.log('req.body:', req.body);
   try {
     const { username, email, password } = req.body;
 
@@ -11,18 +13,19 @@ exports.registerUser = async (req, res) => {
     }
 
     // Hash the password using the middleware
-    req.body.password = await hashPassword(null, null, () => {}); // Simulate middleware call
+    // req.body.password = await hashPassword(null, null, () => {});
 
     const newUser = new User({
       username,
       email,
-      password: req.body.password, // Store the hashed password
+      password: req.body.password,
     });
 
     const savedUser = await newUser.save();
     const token = generateToken(savedUser._id, savedUser.username, savedUser.email);
     res.status(201).json({ token, userId: savedUser._id, username: savedUser.username, email: savedUser.email }); // Send token on registration
   } catch (err) {
+    console.error('Error in registerUser:', err);
     res.status(400).json({ message: err.message });
   }
 };

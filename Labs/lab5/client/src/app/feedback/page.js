@@ -17,7 +17,7 @@ export default function FeedbackPage() {
     setErrorMessage('');
 
     try {
-      const response = await fetch('/api/feedback', {
+      const response = await fetch('http://localhost:8001/api/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

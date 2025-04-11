@@ -12,9 +12,9 @@ export default function RecipesPage() {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('/api/recipes'); // Updated API endpoint to /api/recipes
+        const response = await fetch('http://localhost:8001/api/recipes');
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         setRecipes(data);
@@ -58,7 +58,6 @@ export default function RecipesPage() {
             <div key={recipe._id} className="bg-white shadow-md rounded-md p-4">
               <h3 className="text-xl font-semibold text-gray-800 mb-2">{recipe.name}</h3>
               <p className="text-gray-600">Ingredients: {recipe.ingredients.slice(0, 5).join(', ')}...</p>
-              {/* You can add more details here if needed, e.g., description */}
             </div>
           ))}
         </div>

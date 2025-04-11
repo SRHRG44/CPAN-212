@@ -2,21 +2,21 @@
   --gray-rgb: 0, 0, 0;
   --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
   --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
-  --accent-light-blue: #ADD8E6; /* Light blue accent */
-  --accent-light-blue-hover: #87CEFA; /* Slightly brighter on hover */
+  --accent-light-blue: #ADD8E6;
+  --accent-light-blue-hover: #87CEFA;
 
-  --button-primary-hover: #555; /* Darker for primary button */
-  --button-secondary-hover: #e0e0e0; /* Lighter for secondary button */
+  --button-primary-hover: #555;
+  --button-secondary-hover: #e0e0e0;
 
-  display: flex; /* Use flexbox for centering */
+  display: flex;
   flex-direction: column;
-  align-items: center; /* Center items horizontally */
-  justify-content: flex-start; /* Align items to the top initially */
+  align-items: center;
+  justify-content: flex-start;
   min-height: 100svh;
-  padding: 40px; /* Adjust padding */
-  gap: 48px; /* Increased gap between main sections */
-  font-family: Arial, Helvetica, sans-serif; /* Use a common font */
-  text-align: center; /* Center text within the page */
+  padding: 40px;
+  gap: 48px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -35,27 +35,27 @@
 .main {
   display: flex;
   flex-direction: column;
-  gap: 32px; /* Adjust gap between main elements */
-  align-items: center; /* Center main content horizontally */
+  gap: 32px;
+  align-items: center;
 }
 
 .main ol {
-  font-family: monospace; /* Use a monospaced font for lists */
+  font-family: monospace;
   padding-left: 0;
   margin: 0;
-  font-size: 16px; /* Adjust font size */
-  line-height: 1.5; /* Adjust line height */
+  font-size: 16px;
+  line-height: 1.5;
   letter-spacing: -0.01em;
   list-style-position: inside;
 }
 
 .main li:not(:last-of-type) {
-  margin-bottom: 12px; /* Adjust margin */
+  margin-bottom: 12px;
 }
 
 .main code {
   font-family: monospace;
-  background: var(--accent-light-blue); /* Light blue background for code */
+  background: var(--accent-light-blue);
   color: var(--foreground);
   padding: 4px 8px;
   border-radius: 6px;
@@ -64,29 +64,28 @@
 
 /* Style the container for the "Start Order" and "View Recipes" buttons */
 .ctas {
-  /* Remove flex and gap here, let Tailwind handle centering */
-  margin-top: 24px; /* Add some top margin to this button group */
+  margin-top: 24px;
 }
 
 .ctas a {
   appearance: none;
   border-radius: 128px;
-  height: 50px; /* Adjust height */
-  padding: 0 24px; /* Adjust padding */
+  height: 50px;
+  padding: 0 24px;
   border: none;
-  border: 1px solid var(--accent-light-blue); /* Light blue border */
+  border: 1px solid var(--accent-light-blue);
   transition:
     background 0.2s,
     color 0.2s,
     border-color 0.2s;
   cursor: pointer;
-  display: inline-flex; /* Use inline-flex to control width based on content */
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px; /* Adjust font size */
+  font-size: 18px;
   line-height: 1.2;
   font-weight: 500;
-  margin: 0 16px; /* Add horizontal margin for spacing between buttons */
+  margin: 0 16px;
 }
 
 a.primary {
@@ -97,16 +96,16 @@ a.primary {
 
 a.secondary {
   color: var(--accent-light-blue);
-  min-width: auto; /* Adjust min-width */
+  min-width: auto;
 }
 
 /* Style the container for the "Register" and "Login" links */
 .authLinks {
   display: flex;
-  flex-direction: column; /* Stack them vertically to center as a group */
-  align-items: center; /* Center the links horizontally within the container */
-  gap: 12px; /* Add space between Register and Login links */
-  margin-top: 24px; /* Add some top margin to these links */
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
 }
 
 .authLinks a {
@@ -122,9 +121,9 @@ a.secondary {
 
 .footer {
   display: flex;
-  justify-content: center; /* Center the footer content */
-  gap: 16px; /* Adjust gap */
-  margin-top: 48px; /* Add more top margin to the footer */
+  justify-content: center;
+  gap: 16px;
+  margin-top: 48px;
 }
 
 .footer a {
@@ -136,10 +135,9 @@ a.secondary {
 
 .footer img {
   flex-shrink: 0;
-  filter: brightness(1.2); /* Slightly brighten logo */
+  filter: brightness(1.2);
 }
 
-/* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   a.primary:hover {
     background: var(--accent-light-blue-hover);
@@ -176,29 +174,42 @@ a.secondary {
   }
 
   .ctas {
-    flex-direction: column; /* Stack buttons on smaller screens */
-    gap: 16px; /* Adjust gap for stacked buttons */
-    width: 100%; /* Make buttons full width on smaller screens */
-    margin-top: 16px; /* Adjust top margin for stacked buttons */
+    display: flex; /* Enable flexbox for centering */
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 32px; /* Increased gap between these buttons */
+    margin-top: 24px; /* Add some top margin to this button group */
   }
-
+  
   .ctas a {
-    font-size: 16px;
-    height: 44px;
-    padding: 0 16px;
-    width: 100%;
-    margin: 8px 0; /* Add vertical margin for stacked buttons */
+    appearance: none;
+    border-radius: 128px;
+    height: 50px; /* Adjust height */
+    padding: 0 24px; /* Adjust padding */
+    border: none;
+    border: 1px solid var(--accent-light-blue); /* Light blue border */
+    transition:
+      background 0.2s,
+      color 0.2s,
+      border-color 0.2s;
+    cursor: pointer;
+    display: inline-flex; /* Use inline-flex to control width based on content */
+    align-items: center;
+    justify-content: center;
+    font-size: 18px; /* Adjust font size */
+    line-height: 1.2;
+    font-weight: 500;
+    margin: 0 16px; /* Add horizontal margin for spacing between buttons */
   }
 
   .authLinks {
-    flex-direction: column; /* Stack links on smaller screens */
-    align-items: center; /* Center stacked links */
+    flex-direction: column;
+    align-items: center;
     gap: 12px;
     margin-top: 16px;
   }
 
   .authLinks a {
-    text-decoration: none; /* Remove underline on stacked links for better readability */
+    text-decoration: none;
   }
 
   .footer {
@@ -212,6 +223,6 @@ a.secondary {
 
 @media (prefers-color-scheme: dark) {
   .logo {
-    filter: invert(0.9); /* Slightly less intense invert for dark mode */
+    filter: invert(0.9);
   }
 }

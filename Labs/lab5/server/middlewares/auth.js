@@ -20,7 +20,7 @@ exports.hashPassword = async (req, res, next) => {
 // Middleware to compare provided password with the stored hash during login
 exports.comparePassword = async (req, res, next) => {
   try {
-    const user = res.locals.user; // Assuming user object is attached to res.locals in a previous middleware
+    const user = res.locals.user;
     if (!user || !req.body.password) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
@@ -49,7 +49,7 @@ exports.verifyToken = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // Attach the decoded user information to the request object
+    req.user = decoded;
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Invalid token' });

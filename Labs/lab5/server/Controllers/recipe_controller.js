@@ -2,6 +2,7 @@ const Recipe = require('../models/recipe.js');
 
 // GET all recipes
 exports.getAllRecipes = async (req, res) => {
+  console.log('GET /api/recipes route hit!');
   try {
     const recipes = await Recipe.find();
     res.json(recipes);

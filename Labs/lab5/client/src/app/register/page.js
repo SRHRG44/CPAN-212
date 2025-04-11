@@ -15,9 +15,9 @@ export default function RegisterPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
-
+    console.log('Submitting registration with:', { username, email, password });
     try {
-      const response = await fetch('/api/register', {
+      const response = await fetch('http://localhost:8001/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,13 +25,13 @@ export default function RegisterPage() {
         body: JSON.stringify({ username, email, password }),
       });
 
-      if (response.ok) {
+      if (response && response.ok) {
         const data = await response.json();
         console.log('Registration successful:', data);
-        localStorage.setItem('authToken', data.token); // Store the JWT token
+        localStorage.setItem('authToken', data.token);
         localStorage.setItem('userId', data.userId);
         localStorage.setItem('username', data.username);
-        router.push('/order'); // Redirect to order page after registration
+        router.push('/order');
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Registration failed');

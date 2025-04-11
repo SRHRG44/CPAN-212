@@ -16,21 +16,21 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('http://localhost:8001/api/feedback', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, message }),
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log('Login successful:', data);
-        localStorage.setItem('authToken', data.token); // Store the JWT token
+        localStorage.setItem('authToken', data.token);
         localStorage.setItem('userId', data.userId);
         localStorage.setItem('username', data.username);
-        router.push('/order'); // Redirect to order page after login
+        router.push('/order');
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Login failed');
