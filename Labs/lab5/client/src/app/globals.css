@@ -2,6 +2,12 @@
   --background: #f0f0f0; /* Light gray background */
   --foreground: #333; /* Dark gray text */
   --accent-light-blue: #ADD8E6; /* Light blue accent */
+  --accent-light-blue-hover: #87CEFA; /* Light blue accent hover */
+  --button-primary-hover: #555;
+  --button-secondary-hover: #e0e0e0;
+  --gray-rgb: 0, 0, 0;
+  --gray-alpha-200: rgba(var(--gray-rgb), 0.08);
+  --gray-alpha-100: rgba(var(--gray-rgb), 0.05);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -9,6 +15,12 @@
     --background: #1a1a1a; /* Darker gray background */
     --foreground: #eee; /* Light gray text */
     --accent-light-blue: #87CEFA; /* Brighter light blue accent for dark mode */
+    --accent-light-blue-hover: #ADD8E6;
+    --button-primary-hover: #ccc;
+    --button-secondary-hover: #333;
+    --gray-rgb: 255, 255, 255;
+    --gray-alpha-200: rgba(var(--gray-rgb), 0.145);
+    --gray-alpha-100: rgba(var(--gray-rgb), 0.06);
   }
 }
 
@@ -45,7 +57,7 @@ a {
 }
 
 a:hover {
-  color: darken(var(--accent-light-blue), 10%); /* Darken link on hover */
+  color: var(--accent-light-blue-hover); /* Darken link on hover */
 }
 
 @media (prefers-color-scheme: dark) {

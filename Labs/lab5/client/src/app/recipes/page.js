@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import RecipeModal from '@/components/RecipeModal';
+import styles from '../page.module.css';
 
 export default function RecipesPage() {
     const [recipes, setRecipes] = useState([]);
@@ -59,35 +60,25 @@ export default function RecipesPage() {
     );
 
     return (
-      <div className="min-h-screen bg-gray-100 flex flex-col">
-          <Navbar />
-          <div className="container mx-auto py-8 flex-grow">
-              <h1 className="text-3xl font-bold text-blue-600 mb-6 text-center">Our Delicious Recipes</h1>
-              <ul className="list-disc pl-5 space-y-2">
-                  {recipes.map(recipe => (
-                      <li key={recipe._id} className="mb-2">
-                          <button
-                              onClick={() => openRecipeModal(recipe)}
-                              className="text-blue-500 hover:text-blue-700 cursor-pointer p-0 text-left"
-                              style={{
-                                  textDecoration: 'underline',
-                                  fontSize: '1.2rem',
-                                  padding: '0.5rem 0',
-                                  backgroundColor: 'black',
-                                  color: 'white',
-                                  borderRadius: '0.375rem',
-                                  width: '100%',
-                                  textAlign: 'left',
-                              }}
-                          >
-                              <span className="text-lg font-medium">{recipe.name}</span>
-                          </button>
-                      </li>
-                  ))}
-              </ul>
-              <RecipeModal recipe={selectedRecipe} onClose={closeRecipeModal} />
-          </div>
-          <Footer />
-      </div>
-  );
+        <div className={styles.page}>
+            <Navbar />
+            <div className={styles.main}>
+                <h1 className={styles.title}>Our Delicious Recipes</h1>
+                <ul className={styles.recipeList}>
+                    {recipes.map(recipe => (
+                        <li key={recipe._id} className={styles.recipeListItem}>
+                            <button
+                                onClick={() => openRecipeModal(recipe)}
+                                className={styles.recipeButton}
+                            >
+                                <span className={styles.recipeName}>{recipe.name}</span>
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+                <RecipeModal recipe={selectedRecipe} onClose={closeRecipeModal} />
+            </div>
+            <Footer />
+        </div>
+    );
 }

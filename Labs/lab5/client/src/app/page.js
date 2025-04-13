@@ -23,9 +23,9 @@ export default function HomePage() {
     };
 
     return (
-        <div className={`min-h-screen bg-gray-100 flex flex-col ${styles.page}`}>
+        <div className={styles.page}>
             <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
-            <div className="container mx-auto text-center py-16 flex-grow">
+            <div className={styles.main}>
                 <h1 className="text-4xl font-bold text-green-600 mb-8">Welcome to Your Food Prep Paradise!</h1>
                 <p className="text-lg text-gray-700 mb-6">
                     Get delicious and healthy meals prepared just the way you like them.

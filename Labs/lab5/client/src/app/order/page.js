@@ -7,6 +7,7 @@ import Cart from '@/components/Cart';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CartModal from '@/components/CartModal';
+import styles from '../page.module.css';
 
 const mealOptions = [
   { label: '1 Meal per Day', value: 1 },
@@ -184,18 +185,18 @@ export default function OrderPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className={styles.page}>
       <Navbar />
-      <div className="container mx-auto py-8 flex-grow">
-        <h1 className="text-3xl font-bold text-green-600 mb-6 text-center">Customize Your Meal Prep</h1>
+      <div className={styles.main}>
+        <h1 className={styles.title}>Customize Your Meal Prep</h1>
 
-        <div className="bg-white shadow-md rounded-md p-6 mb-6">
-          {/* ... (meal plan selection) */}
+        <div className={styles.mealPlanSelection}>
+
         </div>
 
-        <div className="bg-white shadow-md rounded-md p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">2. Select Your Recipes ({Object.values(cart).reduce((sum, qty) => sum + qty, 0)} / {totalMeals} meals selected)</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className={styles.recipeSelection}>
+          <h2 className={styles.sectionTitle}>2. Select Your Recipes ({Object.values(cart).reduce((sum, qty) => sum + qty, 0)} / {totalMeals} meals selected)</h2>
+          <div className={styles.recipeGrid}>
             {recipes.map(recipe => (
               <RecipeItem
                 key={recipe._id}
@@ -209,25 +210,25 @@ export default function OrderPage() {
           </div>
         </div>
 
-        <div className="bg-white shadow-md rounded-md p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">3. Review and Confirm Your Order</h2>
+        <div className={styles.reviewAndConfirm}>
+          <h2 className={styles.sectionTitle}>3. Review and Confirm Your Order</h2>
           <p>Once you have selected {totalMeals} meals, click the button below to review your cart and place your order.</p>
           {orderStatus === 'success' && (
-            <p className="mt-4 text-green-500">Order placed successfully!</p>
+            <p className={styles.successMessage}>Order placed successfully!</p>
           )}
           {orderStatus === 'error' && (
-            <p className="mt-4 text-red-500">{orderErrorMessage}</p>
+            <p className={styles.errorMessage}>{orderErrorMessage}</p>
           )}
           {Object.values(cart).reduce((sum, qty) => sum + qty, 0) === totalMeals && (
             <button
               onClick={openCartModal}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full mt-4 focus:outline-none focus:shadow-outline"
+              className={styles.reviewButton}
             >
               Review and Place Order
             </button>
           )}
           {Object.values(cart).reduce((sum, qty) => sum + qty, 0) < totalMeals && (
-            <p className="mt-4 text-yellow-600">Please select {totalMeals - Object.values(cart).reduce((sum, qty) => sum + qty, 0)} more meals to complete your order.</p>
+            <p className={styles.mealCountWarning}>Please select {totalMeals - Object.values(cart).reduce((sum, qty) => sum + qty, 0)} more meals to complete your order.</p>
           )}
         </div>
       </div>
