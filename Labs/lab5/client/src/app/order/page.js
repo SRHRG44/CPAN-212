@@ -6,6 +6,7 @@ import RecipeItem from '@/components/RecipeItem';
 import Cart from '@/components/Cart';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import CartModal from '@/components/CartModal';
 
 const mealOptions = [
   { label: '1 Meal per Day', value: 1 },
@@ -31,8 +32,9 @@ export default function OrderPage() {
   const [userId, setUserId] = useState(null);
   const [orderStatus, setOrderStatus] = useState(null);
   const [orderErrorMessage, setOrderErrorMessage] = useState('');
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
 
-  useEffect(() => {
+    useEffect(() => {
     const authToken = localStorage.getItem('authToken');
     if (!authToken) {
       router.push('/login');
@@ -42,7 +44,7 @@ export default function OrderPage() {
     const fetchRecipes = async () => {
       try {
         const response = await fetch('http://localhost:8001/api/recipes', {
-          method: 'GET', // Explicitly add the method for clarity
+          method: 'GET',
           headers: {
             'Authorization': `Bearer ${authToken}`,
           },
@@ -109,6 +111,18 @@ export default function OrderPage() {
     });
   };
 
+  const openCartModal = () => {
+    if (Object.values(cart).reduce((sum, qty) => sum + qty, 0) === totalMeals) {
+      setIsCartModalOpen(true);
+    } else {
+      alert('Please select the total number of meals for your order before proceeding.');
+    }
+  };
+
+  const closeCartModal = () => {
+    setIsCartModalOpen(false);
+  };
+
   const handlePlaceOrder = async () => {
     const authToken = localStorage.getItem('authToken');
     if (!authToken) {
@@ -122,20 +136,15 @@ export default function OrderPage() {
       return;
     }
 
-    if (Object.values(cart).reduce((sum, qty) => sum + qty, 0) !== totalMeals) {
-      alert('Please select the total number of meals for your order.');
-      return;
-    }
+    const selectedRecipes = Object.keys(cart).map(recipeId => ({
+      recipeId,
+      quantity: cart[recipeId],
+    }));
 
     setOrderStatus(null);
     setOrderErrorMessage('');
 
     try {
-      const selectedRecipes = Object.keys(cart).map(recipeId => ({
-        recipeId,
-        quantity: cart[recipeId],
-      }));
-
       const response = await fetch('http://localhost:8001/api/orders', {
         method: 'POST',
         headers: {
@@ -155,6 +164,7 @@ export default function OrderPage() {
         console.log('Order placed successfully:', data);
         setOrderStatus('success');
         setCart({});
+        setIsCartModalOpen(false); // Close the modal after successful order
       } else {
         const errorData = await response.json();
         setOrderStatus('error');
@@ -168,22 +178,10 @@ export default function OrderPage() {
   };
 
   if (loading) return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <div className="container mx-auto py-8 flex-grow flex justify-center items-center">
-        Loading recipes...
-      </div>
-      <Footer />
-    </div>
+    <div>Loading...</div>
   );
   if (error) return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <div className="container mx-auto py-8 flex-grow flex justify-center items-center text-red-500">
-        Error loading recipes: {error}
-      </div>
-      <Footer />
-    </div>
+    <div>Error: {error}</div>
   );
 
   return (
@@ -193,40 +191,28 @@ export default function OrderPage() {
         <h1 className="text-3xl font-bold text-green-600 mb-6 text-center">Customize Your Meal Prep</h1>
 
         <div className="bg-white shadow-md rounded-md p-6 mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">1. Choose Your Meal Plan</h2>
-          <div className="flex space-x-4">
-            <div>
-              <label htmlFor="mealsPerDay" className="block text-gray-700 text-sm font-bold mb-2">Meals per Day:</label>
-              <select id="mealsPerDay" className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={mealsPerDay} onChange={handleMealsPerDayChange}>
-                {mealOptions.map(option => (
-                  <option key={option.value} value={option.value}>{option.label}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label htmlFor="duration" className="block text-gray-700 text-sm font-bold mb-2">Duration:</label>
-              <select id="duration" className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value={duration} onChange={handleDurationChange}>
-                {durationOptions.map(option => (
-                  <option key={option.value} value={option.value}>{option.label}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <p className="mt-4 text-gray-600">Total Meals for this plan: <span className="font-semibold">{totalMeals}</span></p>
+          {/* ... (meal plan selection) */}
         </div>
 
         <div className="bg-white shadow-md rounded-md p-6 mb-6">
           <h2 className="text-xl font-semibold text-gray-800 mb-4">2. Select Your Recipes ({Object.values(cart).reduce((sum, qty) => sum + qty, 0)} / {totalMeals} meals selected)</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {recipes.map(recipe => (
-              <RecipeItem key={recipe._id} recipe={recipe} onAddToCart={() => addToCart(recipe._id)} />
+              <RecipeItem
+                key={recipe._id}
+                recipe={recipe}
+                onAddToCart={() => addToCart(recipe._id)}
+                showAddToCartRemove
+                onRemoveFromCart={() => removeFromCart(recipe._id)}
+                cartQuantity={cart[recipe._id] || 0}
+              />
             ))}
           </div>
         </div>
 
         <div className="bg-white shadow-md rounded-md p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">3. Your Cart</h2>
-          <Cart cart={cart} recipes={recipes} onRemoveFromCart={removeFromCart} />
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">3. Review and Confirm Your Order</h2>
+          <p>Once you have selected {totalMeals} meals, click the button below to review your cart and place your order.</p>
           {orderStatus === 'success' && (
             <p className="mt-4 text-green-500">Order placed successfully!</p>
           )}
@@ -235,10 +221,10 @@ export default function OrderPage() {
           )}
           {Object.values(cart).reduce((sum, qty) => sum + qty, 0) === totalMeals && (
             <button
-              onClick={handlePlaceOrder}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full mt-4 focus:outline-none focus:shadow-outline"
+              onClick={openCartModal}
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full mt-4 focus:outline-none focus:shadow-outline"
             >
-              Place Order
+              Review and Place Order
             </button>
           )}
           {Object.values(cart).reduce((sum, qty) => sum + qty, 0) < totalMeals && (
@@ -246,6 +232,14 @@ export default function OrderPage() {
           )}
         </div>
       </div>
+      <CartModal
+        isOpen={isCartModalOpen}
+        onClose={closeCartModal}
+        cart={cart}
+        recipes={recipes}
+        onRemoveFromCart={removeFromCart}
+        onPlaceOrder={handlePlaceOrder}
+      />
       <Footer />
     </div>
   );
