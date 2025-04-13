@@ -2,21 +2,29 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from './page.module.css';
 
 export default function HomePage() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const authToken = localStorage.getItem('authToken');
         setIsLoggedIn(!!authToken);
     }, []);
 
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        setIsLoggedIn(false);
+        router.push('/');
+    };
+
     return (
         <div className={`min-h-screen bg-gray-100 flex flex-col ${styles.page}`}>
-            <Navbar isLoggedIn={isLoggedIn} /> {/* Pass isLoggedIn to Navbar */}
+            <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
             <div className="container mx-auto text-center py-16 flex-grow">
                 <h1 className="text-4xl font-bold text-green-600 mb-8">Welcome to Your Food Prep Paradise!</h1>
                 <p className="text-lg text-gray-700 mb-6">
@@ -31,7 +39,6 @@ export default function HomePage() {
                         View Our Recipes
                     </Link>
                 </div>
-                {/* Conditionally render this section */}
                 {!isLoggedIn && (
                     <div className={styles.authLinks}>
                         <p className="text-lg text-gray-700">Ready to get started?</p>
