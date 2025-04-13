@@ -16,12 +16,12 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:8001/api/feedback', {
+      const response = await fetch('http://localhost:8001/api/login', { // Changed to /api/login
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (response.ok) {
@@ -30,7 +30,7 @@ export default function LoginPage() {
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('userId', data.userId);
         localStorage.setItem('username', data.username);
-        router.push('/order');
+        router.push('/');
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Login failed');

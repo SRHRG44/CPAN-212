@@ -51,7 +51,6 @@ export default function OrderPage() {
         });
         if (!response.ok) {
           if (response.status === 401) {
-            // Token might be invalid or expired, redirect to login
             localStorage.removeItem('authToken');
             localStorage.removeItem('userId');
             localStorage.removeItem('username');
@@ -164,7 +163,7 @@ export default function OrderPage() {
         console.log('Order placed successfully:', data);
         setOrderStatus('success');
         setCart({});
-        setIsCartModalOpen(false); // Close the modal after successful order
+        setIsCartModalOpen(false);
       } else {
         const errorData = await response.json();
         setOrderStatus('error');
