@@ -12,9 +12,8 @@ const orderSchema = new mongoose.Schema({
       quantity: { type: Number, required: true, min: 1 },
     },
   ],
-  // You might want to add a status field (e.g., 'pending', 'processing', 'completed')
 });
 
-const Order = mongoose.model('Order', orderSchema, 'orders'); // Collection name 'orders'
+const Order = mongoose.model('Order', orderSchema, 'orders');
 
 module.exports = Order;

@@ -6,7 +6,7 @@ import styles from './Navbar.module.css';
 
 export default function Navbar({ isLoggedIn, handleLogout }) {
     const handleLogoutClick = () => {
-        handleLogout(); // Clear authToken & update state
+        handleLogout();
     };
 
     return (

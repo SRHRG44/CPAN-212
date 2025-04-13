@@ -40,5 +40,3 @@ exports.getFeedbackById = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-// You might add functionality to delete feedback if needed

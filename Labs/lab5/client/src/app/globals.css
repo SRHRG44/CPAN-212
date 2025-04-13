@@ -1,8 +1,8 @@
 :root {
-  --background: #f0f0f0; /* Light gray background */
-  --foreground: #333; /* Dark gray text */
-  --accent-light-blue: #ADD8E6; /* Light blue accent */
-  --accent-light-blue-hover: #87CEFA; /* Light blue accent hover */
+  --background: #f0f0f0;
+  --foreground: #333;
+  --accent-light-blue: #ADD8E6;
+  --accent-light-blue-hover: #87CEFA;
   --button-primary-hover: #555;
   --button-secondary-hover: #e0e0e0;
   --gray-rgb: 0, 0, 0;
@@ -12,9 +12,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1a1a1a; /* Darker gray background */
-    --foreground: #eee; /* Light gray text */
-    --accent-light-blue: #87CEFA; /* Brighter light blue accent for dark mode */
+    --background: #1a1a1a;
+    --foreground: #eee;
+    --accent-light-blue: #87CEFA;
     --accent-light-blue-hover: #ADD8E6;
     --button-primary-hover: #ccc;
     --button-secondary-hover: #333;
@@ -30,9 +30,9 @@ body {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center content horizontally */
-  justify-content: center; /* Center content vertically (for full viewport height) */
-  min-height: 100vh; /* Ensure full viewport height */
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 body {
@@ -41,7 +41,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center; /* Center text content by default */
+  text-align: center;
 }
 
 * {
@@ -51,13 +51,13 @@ body {
 }
 
 a {
-  color: var(--accent-light-blue); /* Light blue links */
+  color: var(--accent-light-blue);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 a:hover {
-  color: var(--accent-light-blue-hover); /* Darken link on hover */
+  color: var(--accent-light-blue-hover);
 }
 
 @media (prefers-color-scheme: dark) {

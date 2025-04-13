@@ -4,8 +4,7 @@ const Order = require('../models/order');
 exports.createOrder = async (req, res) => {
   try {
     const { userId, mealsPerDay, durationWeeks, selectedRecipes } = req.body;
-    const totalMeals = mealsPerDay * durationWeeks * 7; // Calculate total meals
-
+    const totalMeals = mealsPerDay * durationWeeks * 7;
     const newOrder = new Order({
       userId,
       mealsPerDay,
@@ -43,5 +42,3 @@ exports.getOrderById = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
-// You might want to add more order-related controllers (e.g., updating order status - but based on your initial request, creation and retrieval are key)

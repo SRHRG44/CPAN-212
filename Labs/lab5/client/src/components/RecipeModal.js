@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './CartModal.module.css'; // Import the CSS module
+import styles from './CartModal.module.css';
 
 const RecipeModal = ({ recipe, onClose }) => {
     if (!recipe) return null;

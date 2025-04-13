@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './CartModal.module.css'; // Import the CSS module
+import styles from './CartModal.module.css';
 
 const CartModal = ({ isOpen, onClose, cart, recipes, onRemoveFromCart, onPlaceOrder }) => {
   if (!isOpen) {
@@ -14,7 +14,7 @@ const CartModal = ({ isOpen, onClose, cart, recipes, onRemoveFromCart, onPlaceOr
   const totalMeals = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className={styles.modal}> {/* Use the CSS module class names */}
+    <div className={styles.modal}>
       <div className={styles.modalContent}>
         <h2 className={styles.modalTitle}>Confirm Your Order</h2>
         {cartItems.length > 0 ? (
