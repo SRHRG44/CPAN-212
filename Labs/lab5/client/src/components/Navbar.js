@@ -1,18 +1,35 @@
-'use client'
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styles from './Navbar.module.css';
 
-export default function Navbar({ isLoggedIn, handleLogout }) {
+export default function Navbar() {
     const router = useRouter();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        setIsLoggedIn(!!token);
+
+        const handleStorageChange = () => {
+            const updatedToken = localStorage.getItem('authToken');
+            setIsLoggedIn(!!updatedToken);
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, []);
 
     const handleLogoutClick = () => {
         localStorage.removeItem('authToken');
         localStorage.removeItem('userId');
         localStorage.removeItem('username');
-        handleLogout();
+        setIsLoggedIn(false);
+        router.push('/');
     };
 
     return (
@@ -31,7 +48,6 @@ export default function Navbar({ isLoggedIn, handleLogout }) {
                 {isLoggedIn && (
                     <button
                         onClick={handleLogoutClick}
-
                         style={{
                             color: 'var(--accent-light-blue)',
                             textDecoration: 'none',

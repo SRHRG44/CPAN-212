@@ -44,25 +44,25 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className={styles.registerPage}> {/* Apply CSS Module class */}
+    <div className={styles.registerPage}>
       <Navbar />
-      <div className={styles.container}> {/* Apply CSS Module class */}
-        <h2 className={styles.heading}>Register</h2> {/* Apply CSS Module class */}
-        {error && <p className={styles.errorMessage}>{error}</p>} {/* Apply CSS Module class */}
+      <div className={styles.container}>
+        <h2 className={styles.heading}>Register</h2>
+        {error && <p className={styles.errorMessage}>{error}</p>}
         <form onSubmit={handleSubmit}>
-          <div className={styles.formGroup}> {/* Apply CSS Module class */}
-            <label htmlFor="username" className={styles.label}>Username:</label> {/* Apply CSS Module class */}
-            <input type="text" id="username" className={styles.input} value={username} onChange={(e) => setUsername(e.target.value)} required /> {/* Apply CSS Module class */}
+          <div className={styles.formGroup}>
+            <label htmlFor="username" className={styles.label}>Username:</label>
+            <input type="text" id="username" className={styles.input} value={username} onChange={(e) => setUsername(e.target.value)} required />
           </div>
-          <div className={styles.formGroup}> {/* Apply CSS Module class */}
-            <label htmlFor="email" className={styles.label}>Email:</label> {/* Apply CSS Module class */}
-            <input type="email" id="email" className={styles.input} value={email} onChange={(e) => setEmail(e.target.value)} required /> {/* Apply CSS Module class */}
+          <div className={styles.formGroup}>
+            <label htmlFor="email" className={styles.label}>Email:</label>
+            <input type="email" id="email" className={styles.input} value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
-          <div className={styles.formGroup}> {/* Apply CSS Module class */}
-            <label htmlFor="password" className={styles.label}>Password:</label> {/* Apply CSS Module class */}
-            <input type="password" id="password" className={styles.input} value={password} onChange={(e) => setPassword(e.target.value)} required /> {/* Apply CSS Module class */}
+          <div className={styles.formGroup}>
+            <label htmlFor="password" className={styles.label}>Password:</label>
+            <input type="password" id="password" className={styles.input} value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-          <button type="submit" className={styles.submitButton}> {/* Apply CSS Module class */}
+          <button type="submit" className={styles.submitButton}>
             Register
           </button>
         </form>
