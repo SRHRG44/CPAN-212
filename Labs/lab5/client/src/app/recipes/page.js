@@ -11,6 +11,19 @@ export default function RecipesPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedRecipe, setSelectedRecipe] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        setIsLoggedIn(!!token);
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('username');
+        setIsLoggedIn(false);
+    };
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -39,29 +52,33 @@ export default function RecipesPage() {
         setSelectedRecipe(null);
     };
 
-    if (loading) return (
-        <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <div className="container mx-auto py-8 flex-grow flex justify-center items-center">
-                Loading recipes...
+    if (loading) {
+        return (
+            <div className="min-h-screen flex flex-col">
+                <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+                <div className="container mx-auto py-8 flex-grow flex justify-center items-center">
+                    Loading recipes...
+                </div>
+                <Footer />
             </div>
-            <Footer />
-        </div>
-    );
+        );
+    }
 
-    if (error) return (
-        <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <div className="container mx-auto py-8 flex-grow flex justify-center items-center text-red-500">
-                Error loading recipes: {error}
+    if (error) {
+        return (
+            <div className="min-h-screen flex flex-col">
+                <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+                <div className="container mx-auto py-8 flex-grow flex justify-center items-center text-red-500">
+                    Error loading recipes: {error}
+                </div>
+                <Footer />
             </div>
-            <Footer />
-        </div>
-    );
+        );
+    }
 
     return (
         <div className={styles.page}>
-            <Navbar />
+            <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
             <div className={styles.main}>
                 <h1 className={styles.title}>Our Delicious Recipes</h1>
                 <ul className={styles.recipeList}>

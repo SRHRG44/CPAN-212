@@ -34,13 +34,17 @@ export default function OrderPage() {
   const [orderStatus, setOrderStatus] = useState(null);
   const [orderErrorMessage, setOrderErrorMessage] = useState('');
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
     const authToken = localStorage.getItem('authToken');
     if (!authToken) {
       router.push('/login');
       return;
     }
+
+    setIsLoggedIn(true);
+    setUserId(localStorage.getItem('userId'));
 
     const fetchRecipes = async () => {
       try {
@@ -70,13 +74,20 @@ export default function OrderPage() {
     };
 
     fetchRecipes();
-    setUserId(localStorage.getItem('userId'));
   }, [router]);
 
   useEffect(() => {
     setTotalMeals(mealsPerDay * duration);
     setCart({});
   }, [mealsPerDay, duration]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    setIsLoggedIn(false);
+    router.push('/');
+  };
 
   const handleMealsPerDayChange = (event) => {
     setMealsPerDay(parseInt(event.target.value));
@@ -177,21 +188,47 @@ export default function OrderPage() {
     }
   };
 
-  if (loading) return (
-    <div>Loading...</div>
-  );
-  if (error) return (
-    <div>Error: {error}</div>
-  );
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className={styles.page}>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <div className={styles.main}>
         <h1 className={styles.title}>Customize Your Meal Prep</h1>
 
         <div className={styles.mealPlanSelection}>
+          <div className={styles.dropdownGroup}>
+            <label htmlFor="mealsPerDay">1. Meals per Day:</label>
+            <select
+              id="mealsPerDay"
+              value={mealsPerDay}
+              onChange={handleMealsPerDayChange}
+              className={styles.select}
+            >
+              {mealOptions.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
+          <div className={styles.dropdownGroup}>
+            <label htmlFor="duration">Duration:</label>
+            <select
+              id="duration"
+              value={duration}
+              onChange={handleDurationChange}
+              className={styles.select}
+            >
+              {durationOptions.map(option => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className={styles.recipeSelection}>
@@ -228,10 +265,13 @@ export default function OrderPage() {
             </button>
           )}
           {Object.values(cart).reduce((sum, qty) => sum + qty, 0) < totalMeals && (
-            <p className={styles.mealCountWarning}>Please select {totalMeals - Object.values(cart).reduce((sum, qty) => sum + qty, 0)} more meals to complete your order.</p>
+            <p className={styles.reviewButton}>
+              Please select {totalMeals - Object.values(cart).reduce((sum, qty) => sum + qty, 0)} more meals to complete your order.
+            </p>
           )}
         </div>
       </div>
+
       <CartModal
         isOpen={isCartModalOpen}
         onClose={closeCartModal}
@@ -240,7 +280,9 @@ export default function OrderPage() {
         onRemoveFromCart={removeFromCart}
         onPlaceOrder={handlePlaceOrder}
       />
+
       <Footer />
     </div>
   );
 }
+

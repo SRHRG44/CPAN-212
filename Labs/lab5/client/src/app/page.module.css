@@ -42,6 +42,12 @@
   font-weight: bold;
 }
 
+.description {
+  font-size: 1.125rem;
+  color: rgb(231, 229, 229);
+  margin-bottom: 1.5rem;
+}
+
 /* Style the container for the "Start Order" and "View Recipes" buttons */
 .ctas {
   margin-top: 24px;
@@ -69,13 +75,14 @@
 }
 
 a.primary {
-  background: var(--accent-light-blue);
-  color: var(--background);
+  color: var(--accent-light-blue);
   gap: 12px;
+  min-width: auto;
 }
 
 a.secondary {
   color: var(--accent-light-blue);
+  gap: 12px;
   min-width: auto;
 }
 
@@ -162,7 +169,7 @@ a.secondary {
 
 /* Each recipe item takes up 80% of the screen width */
 .recipeItemContainer {
-  width: 80%;
+  width: 100%;
   background-color: var(--background);
   padding: 24px;
   border: 1px solid var(--accent-light-blue);
@@ -192,9 +199,62 @@ a.secondary {
   transition: background 0.3s ease;
 }
 
-/* Optional hover effect */
 .recipeButtonAction:hover {
   background-color: darkred;
+}
+
+/* Style for the meal plan selection dropdown */
+.mealPlanSelection {
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.dropdownGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownGroup label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #000000;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.select:hover,
+.select:focus {
+  border-color: #0070f3;
+}
+
+.reviewButton {
+  background-color: #0070f3;
+  color: white;
+  padding: 1.25rem 2.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+.reviewButton:hover {
+  background-color: #005bb5;
+}
+
+.title {
+  color: #3b82f6;
 }
 
 @media (hover: hover) and (pointer: fine) {

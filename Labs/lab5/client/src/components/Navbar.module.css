@@ -1,83 +1,97 @@
 .navbar {
-    display: flex;
-    justify-content: center; /* Center the navbar links */
-    align-items: center;
-    padding: 1rem 2rem; /* Adjust padding as needed */
-    background-color: var(--background);
-    color: var(--foreground);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-light-blue);
+  margin-right: auto;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.navLinks a {
+  color: var(--accent-light-blue);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navLinks a:hover {
+  color: #005bb5;
+}
+
+.logoutButton {
+  color: var(--accent-light-blue);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.logoutButton:hover {
+  color: #005bb5;
+}
+
+.mobileMenuButton {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--accent-light-blue);
+}
+
+.mobileNav {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--background);
+  padding: 1rem;
+  border-bottom: 1px solid var(--gray-alpha-200);
+  z-index: 10;
+}
+
+.mobileNav a {
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: var(--accent-light-blue);
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.mobileNav a:hover {
+  background-color: var(--gray-alpha-100);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    justify-content: space-between;
   }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--accent-light-blue);
-    margin-right: auto; /* Push logo to the left if needed */
-  }
-  
+
   .navLinks {
-    display: flex;
-    align-items: center;
-    gap: 24px; /* Add spacing between navigation links */
+    display: none;
   }
-  
-  .navLinks a {
-    color: var(--accent-light-blue);
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-  }
-  
-  .navLinks a:hover {
-    color: darken(var(--accent-light-blue), 15%);
-  }
-  
-  /* Mobile navigation styles (you might have these already) */
+
   .mobileMenuButton {
-    display: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--accent-light-blue);
+    display: block;
   }
-  
-  .mobileNav {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: var(--background);
-    padding: 1rem;
-    border-bottom: 1px solid var(--gray-alpha-200);
-    z-index: 10;
+
+  .mobileNav.open {
+    display: flex;
   }
-  
-  .mobileNav a {
-    padding: 0.75rem 1rem;
-    text-decoration: none;
-    color: var(--accent-light-blue);
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  .mobileNav a:hover {
-    background-color: var(--gray-alpha-100);
-  }
-  
-  @media (max-width: 768px) {
-    .navbar {
-      justify-content: space-between; /* Reset justify-content for mobile */
-    }
-  
-    .navLinks {
-      display: none; /* Hide desktop links on smaller screens */
-    }
-  
-    .mobileMenuButton {
-      display: block; /* Show mobile menu button */
-    }
-  
-    .mobileNav.open {
-      display: flex; /* Show mobile navigation when open class is applied */
-    }
-  }
+}

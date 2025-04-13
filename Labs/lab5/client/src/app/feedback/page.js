@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import styles from './feedback.module.css';
@@ -11,6 +11,20 @@ export default function FeedbackPage() {
   const [message, setMessage] = useState('');
   const [submissionStatus, setSubmissionStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    setIsLoggedIn(false);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,7 +59,7 @@ export default function FeedbackPage() {
 
   return (
     <div className={styles.feedbackPage}>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <div className={styles.container}>
         <h2 className={styles.heading}>Send Us Your Feedback</h2>
         {submissionStatus === 'success' && (
